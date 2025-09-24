@@ -1,3 +1,5 @@
+/* eslint react/no-unescaped-entities: "off" */
+
 import { useMemo, useState } from "react";
 
 // tiny UI
