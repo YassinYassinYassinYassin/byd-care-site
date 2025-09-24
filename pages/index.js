@@ -1,34 +1,14 @@
-// Self-contained React component (no external icon/Next.js deps)
-// Fixes: removed `lucide-react` and `next/head` imports that caused preview errors.
-
 import { useMemo, useState } from "react";
 
-// --- Tiny UI primitives ---
+// tiny UI
 const Button = ({ as: Tag = "button", className = "", children, ...props }) => (
-  <Tag
-    className={
-      "inline-flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold shadow-sm border border-black/10 hover:shadow transition " +
-      className
-    }
-    {...props}
-  >
-    {children}
-  </Tag>
+  <Tag className={"inline-flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold shadow-sm border border-black/10 hover:shadow transition " + className} {...props}>{children}</Tag>
 );
+const Card = ({ className = "", children }) => (<div className={"rounded-2xl border border-black/10 bg-white shadow-sm " + className}>{children}</div>);
+const Section = ({ id, className = "", children }) => (<section id={id} className={"mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 " + className}>{children}</section>);
+const EmojiIcon = ({ e, label = "icon", className = "" }) => (<span role="img" aria-label={label} className={"inline-block align-middle " + className}>{e}</span>);
 
-const Card = ({ className = "", children }) => (
-  <div className={"rounded-2xl border border-black/10 bg-white shadow-sm " + className}>{children}</div>
-);
-
-const Section = ({ id, className = "", children }) => (
-  <section id={id} className={"mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 " + className}>{children}</section>
-);
-
-const EmojiIcon = ({ e, label = "icon", className = "" }) => (
-  <span role="img" aria-label={label} className={"inline-block align-middle " + className}>{e}</span>
-);
-
-// --- Data (icons swapped to emoji for sandbox compatibility) ---
+// data
 const CHANNELS = [
   { name: "Amazon FBA/FBM", emoji: "🛒", desc: "Brand Registry, A+ content, demand forecasting, Seller/Vendor Central ops." },
   { name: "Walmart Marketplace", emoji: "🏬", desc: "WFS/3P, spec compliance, search + in-grid ads, fast tags." },
@@ -37,27 +17,23 @@ const CHANNELS = [
   { name: "B2B / EDI", emoji: "📄", desc: "Net terms, portal management, EDI (850/855/856/810), chargebacks." },
   { name: "Wholesale & 3P", emoji: "🏭", desc: "Distributor relationships, MOQs, MAP enforcement, replenishment." }
 ];
-
 const SERVICES = [
   { title: "Sourcing & Compliance", points: ["RFQs & vendor audits", "ASTM/ISO docs", "COO & labeling"], emoji: "🛡️" },
   { title: "Ops & 3PL", points: ["FBA prep & routing", "WMS/ASN", "Returns/RMA"], emoji: "🚚" },
   { title: "Growth & Ads", points: ["SEO/PDP builds", "PPC/AMS", "Promos & bundles"], emoji: "📈" },
   { title: "Packaging & QA", points: ["Dielines & barcodes", "Drop tests", "QC checklists"], emoji: "📦" }
 ];
-
 const METRICS = [
   { label: "Fill Rate", value: "98.6%" },
   { label: "On-Time Ship", value: "99.1%" },
   { label: "Retail Chargebacks", value: "<0.3%" },
   { label: "SKUs Managed", value: "1,200+" }
 ];
-
 const CASES = [
-  { brand: "HomeCare Brand", result: "+212% 90‑day sales", detail: "Launched on Amazon + Walmart with retail-ready packaging; reduced chargebacks 87%." },
-  { brand: "Beauty DTC", result: "CAC −28%", detail: "Rebuilt Shopify, A/B PDPs, subscriptions; introduced bundles for AOV +19%." },
-  { brand: "Hardware OEM", result: "EDI in 30 days", detail: "Stood up 850/855/856/810 flows, ASN accuracy 99.7%, eliminated routing fines." }
+  { brand: "HomeCare Brand", result: "+212% 90-day sales", detail: "Launched on Amazon + Walmart; chargebacks −87%." },
+  { brand: "Beauty DTC", result: "CAC −28%", detail: "Rebuilt Shopify; AOV +19% via bundles/subscriptions." },
+  { brand: "Hardware OEM", result: "EDI in 30 days", detail: "850/855/856/810 flows; ASN accuracy 99.7%." }
 ];
-
 const CATEGORIES = [
   { name: "Personal Care", examples: ["Disposable Face Masks", "Hand Sanitizer", "Moisturizing Lotions"] },
   { name: "Household Essentials", examples: ["Cleaning Wipes", "Trash Bags", "Multi-surface Sprays"] },
@@ -81,7 +57,7 @@ export default function Home() {
       <header className="sticky top-0 z-40 w-full border-b border-black/10 backdrop-blur bg-white/70">
         <Section className="flex h-16 items-center justify-between">
           <a href="#" className="flex items-center gap-2 font-extrabold tracking-tight text-lg">
-            <EmojiIcon e="📦" label="boxes" className="text-lg" /> BYD CARE Distribution
+            <EmojiIcon e="📦" /> BYD CARE Distribution
           </a>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
             <a href="#channels" className="hover:opacity-70">Channels</a>
@@ -96,10 +72,10 @@ export default function Home() {
       {/* Hero */}
       <Section className="pt-16 pb-12">
         <h1 className="text-4xl md:text-5xl font-extrabold leading-tight tracking-tight max-w-3xl">
-          Multi‑Channel Distribution that actually ships and scales.
+          Multi-Channel Distribution that actually ships and scales.
         </h1>
         <p className="mt-4 text-zinc-700 text-lg max-w-2xl">
-          We move your product from factory to cart across Amazon, Walmart, Target+, Shopify, and B2B/EDI — with compliance, packaging, ads, and 3PL handled end‑to‑end.
+          We move your product from factory to cart across Amazon, Walmart, Target+, Shopify, and B2B/EDI — with compliance, packaging, ads, and 3PL handled end-to-end.
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Button as="a" href="#contact" className="bg-black text-white">Request Pricing</Button>
@@ -112,7 +88,7 @@ export default function Home() {
         <div className="flex flex-wrap gap-4 text-sm text-zinc-600">
           {METRICS.map((m) => (
             <div key={m.label} className="flex items-center gap-2">
-              <EmojiIcon e="✅" label="check" className="text-base" /> {m.label}: <span className="font-semibold text-zinc-900 ml-1">{m.value}</span>
+              <EmojiIcon e="✅" /> {m.label}: <span className="font-semibold text-zinc-900 ml-1">{m.value}</span>
             </div>
           ))}
         </div>
@@ -125,7 +101,7 @@ export default function Home() {
           {CHANNELS.map((c) => (
             <Card key={c.name} className="p-6">
               <div className="flex items-center gap-3">
-                <EmojiIcon e={c.emoji} label={c.name} className="text-xl" />
+                <EmojiIcon e={c.emoji} className="text-xl" />
                 <h3 className="font-semibold">{c.name}</h3>
               </div>
               <p className="mt-3 text-sm text-zinc-700">{c.desc}</p>
@@ -141,12 +117,12 @@ export default function Home() {
           {SERVICES.map((s) => (
             <Card key={s.title} className="p-6">
               <div className="flex items-center gap-3">
-                <EmojiIcon e={s.emoji} label={s.title} className="text-xl" />
+                <EmojiIcon e={s.emoji} className="text-xl" />
                 <h3 className="font-semibold">{s.title}</h3>
               </div>
               <ul className="mt-3 space-y-2 text-sm text-zinc-700">
                 {s.points.map((p) => (
-                  <li key={p} className="flex items-start gap-2"><EmojiIcon e="✅" className="mt-0.5" />{p}</li>
+                  <li key={p} className="flex items-start gap-2"><EmojiIcon e="✅" />{p}</li>
                 ))}
               </ul>
             </Card>
@@ -170,17 +146,17 @@ export default function Home() {
 
       {/* Categories */}
       <Section id="categories" className="py-12">
-        <h2 className="text-2xl md:text-3xl font-extrabold mb-8">Categories we've sold in</h2>
+        <h2 className="text-2 md:text-3xl font-extrabold mb-8">Categories we've sold in</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {CATEGORIES.map((cat) => (
             <Card key={cat.name} className="p-6">
               <div className="flex items-center gap-3">
-                <EmojiIcon e="🗂️" label="folder" className="text-xl" />
+                <EmojiIcon e="🗂️" className="text-xl" />
                 <h3 className="font-semibold">{cat.name}</h3>
               </div>
               <ul className="mt-3 space-y-2 text-sm text-zinc-700">
                 {cat.examples.map((ex) => (
-                  <li key={ex} className="flex items-start gap-2"><EmojiIcon e="✅" className="mt-0.5" />{ex}</li>
+                  <li key={ex} className="flex items-start gap-2"><EmojiIcon e="✅" />{ex}</li>
                 ))}
               </ul>
             </Card>
@@ -193,10 +169,10 @@ export default function Home() {
         <div className="grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <h2 className="text-2xl md:text-3xl font-extrabold">Contact</h2>
-            <p className="mt-3 text-sm text-zinc-700 max-w-md">Tell us your SKUs, monthly volume, and target channels. We’ll reply with a pilot plan and pricing.</p>
+            <p className="mt-3 text-sm text-zinc-700 max-w-md">Tell us your SKUs, monthly volume, and target channels. We&rsquo;ll reply with a pilot plan and pricing.</p>
             <div className="mt-6 space-y-2 text-sm">
-              <div className="flex items-center gap-2"><EmojiIcon e="📞" className="text-base"/> (626) 885-3145</div>
-              <a className="flex items-center gap-2 hover:underline" href="mailto:sales@bydcare.shop"><EmojiIcon e="✉️" className="text-base"/> sales@bydcare.shop</a>
+              <div className="flex items-center gap-2"><EmojiIcon e="📞" /> (626) 885-3145</div>
+              <a className="flex items-center gap-2 hover:underline" href="mailto:sales@bydcare.shop"><EmojiIcon e="✉️" /> sales@bydcare.shop</a>
             </div>
           </div>
           <div className="lg:col-span-7">
@@ -225,8 +201,8 @@ export default function Home() {
       <footer className="mt-20 border-t border-black/10 bg-white">
         <Section className="py-10 grid gap-6 md:grid-cols-4">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 font-extrabold text-lg"><EmojiIcon e="📦" className="text-lg"/> BYD CARE Distribution</div>
-            <p className="mt-3 text-sm text-zinc-700 max-w-md">End‑to‑end multi‑channel distribution. We source, prep, ship, list, and grow — with compliance dialed in.</p>
+            <div className="flex items-center gap-2 font-extrabold text-lg"><EmojiIcon e="📦" /> BYD CARE Distribution</div>
+            <p className="mt-3 text-sm text-zinc-700 max-w-md">End-to-end multi-channel distribution. We source, prep, ship, list, and grow — with compliance dialed in.</p>
           </div>
           <div>
             <div className="text-sm font-semibold mb-2">Company</div>
@@ -258,25 +234,18 @@ function Input({ label, onChange, className = "", ...props }) {
   return (
     <label className="grid gap-1 text-sm w-full">
       <span className="font-medium text-zinc-800">{label}</span>
-      <input
-        {...props}
-        className={"w-full rounded-xl border border-black/10 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-black/10 " + className}
-        onChange={(e) => onChange?.(e.target.value)}
-      />
+      <input {...props} className={"w-full rounded-xl border border-black/10 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-black/10 " + className} onChange={(e) => onChange?.(e.target.value)} />
     </label>
   );
 }
-
 function Textarea({ label, onChange, className = "", ...props }) {
   return (
     <label className="grid gap-1 text-sm w-full">
       <span className="font-medium text-zinc-800">{label}</span>
-      <textarea
-        {...props}
-        className={"w-full rounded-xl border border-black/10 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-black/10 " + className}
-        onChange={(e) => onChange?.(e.target.value)}
-      />
+      <textarea {...props} className={"w-full rounded-xl border border-black/10 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-black/10 " + className} onChange={(e) => onChange?.(e.target.value)} />
     </label>
   );
 }
+
+
 
